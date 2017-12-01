@@ -1,0 +1,76 @@
+<html>
+    <head>
+    
+    <script src="jquery-3.2.1.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <script src="highmaps.js"></script>
+    <script src="exporting.js"></script>
+    <script src="world-palestine-highres.js"></script>
+    <style>
+    #container {
+        height: 500px; 
+        min-width: 310px; 
+        max-width: 800px; 
+        margin: 0 auto; 
+    }
+    .loading {
+        margin-top: 10em;
+        text-align: center;
+        color: gray;
+    }
+    </style>
+    <script>
+    var myList;
+    $.getJSON('SanitationNewData.json')
+    .done(function (data) {
+    myList = data;
+    console.log(myList);
+    Highcharts.mapChart('container', {
+        chart: {
+            map: 'custom/world-palestine-highres'
+        },
+
+        title: {
+            text: 'Sanitation Analysis'
+        },
+
+        subtitle: {
+            text: 'Analysis of Sanitation Improvement across the World.'
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        colorAxis: {
+            min: 0
+        },
+
+        series: [{
+            data: myList,
+            name: 'Sanitation Improvement',
+            states: {
+                hover: {
+                    color: '#BADA55'
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}'
+            }
+        }]
+    });
+    });
+
+
+
+    </script>
+    </head>
+<body>
+<div id="container"></div>
+</body>
+</html> 
+
